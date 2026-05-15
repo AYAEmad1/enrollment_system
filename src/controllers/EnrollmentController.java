@@ -64,6 +64,7 @@ public class EnrollmentController implements Initializable {
 
     @FXML
     private void addbtn(ActionEvent event) {
+        if(enrollValidore){
         try {
             int Student_id = Integer.parseInt(studentidtxt.getText());
             int course_id = Integer.parseInt(cousreistxt.getText());
@@ -74,6 +75,7 @@ public class EnrollmentController implements Initializable {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+    }
     }
 
     @FXML
@@ -120,5 +122,26 @@ public class EnrollmentController implements Initializable {
         }
 
     }
-
+    private boolean enrollValidor(){
+        if(studentidtxt.getText().isEmpty() || courseidtxt.getText().isEmpty()){
+            showWarningAlert("missing data" ,"wait!" ,"please fill all fields");
+            return false
+        }
+        int sid = Integer.paresInt(studentidtxt.getText());
+        int cid = Integer.paresInt(courseidtxt.getText());
+        for(Enrollment e : tableid.getItems){
+            if(e.getStudentid() == sid && e.getCourseid() == cid){
+                showWarningAlert("Duplicate","Error","Student already enrolled");
+                return false;
+            }
+        }
+        return true;
+    }
+private void showWarningAlert(String title, String header,String content){
+    javafx.scene.control.Alert.alert = new javafx.sceen.control.Alert(javafx.scene.control.Alert.AlertType.Warning);
+    alert.setTitle(title);
+    alert.setHeaderText(header);
+    alert.setContentText(content);
+    alert.showAndwait();
+}
 }
